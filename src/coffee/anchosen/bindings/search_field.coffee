@@ -1,9 +1,10 @@
-define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
+define ['jquery', 'knockout'], ($, ko) ->
 	UPARROW = 38
 	DOWNARROW = 40
+	BACKSPACE = 8
 	ESCAPE = 27
 	ENTER = 13
-	ko.bindingHandlers.searchField =
+	ko.bindingHandlers.anchosenSearchField =
 		init: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) ->
 			$el = $ element
 			value = valueAccessor()
@@ -11,9 +12,12 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			$el.val val
 			callback = () ->
 				val = $el.val()
-				value val
+				value val if val != $el.attr('placeholder')
 			$el.bind 'input.anchosen', callback
-			$el.bind 'propertychange.anchosen', callback
+
+			# IE doesn't fire input events on text deletions, only additions *sigh* who ever thought that was a great idea?
+			if $.browser.msie
+				$el.bind 'keyup.anchosen', callback
 
 
 			$el.bind 'keydown.anchosen', (e) ->
@@ -24,6 +28,12 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 					when DOWNARROW
 						e.preventDefault()
 						viewModel.highlightNext()
+					when BACKSPACE
+						if value() == ''
+							if viewModel.lastSelectedIsMarked()
+								viewModel.deselectLast()
+							else
+								viewModel.lastSelectedIsMarked true
 
 			$el.bind 'keyup.anchosen', (e) ->
 				switch e.keyCode

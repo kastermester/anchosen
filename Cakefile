@@ -1,7 +1,61 @@
 fs = require 'fs'
+path = require 'path'
+requirejs = require 'requirejs'
 nodejs_exec = require('child_process').exec
 
 cwd = __dirname + '/'
+
+rjs = (cont) ->
+	config =
+		appDir: 'bin'
+		dir: 'build'
+		baseUrl: 'js'
+		keepBuildDir: true
+		skipDirOptimize: true
+		optimize: "none"
+		useStrict: true
+		removeCombined: true
+		modules: [
+			{
+				name: 'anchosen'
+				exclude: ['knockout', 'jquery', 'underscore']
+			}
+		]
+		paths:
+			jquery: "jquery"
+			knockout: "knockout"
+			underscore: "underscore"
+		shim:
+			underscore:
+				exports: "_"
+
+
+	requirejs.optimize config, (buildResponse) ->
+		config =
+			appDir: 'bin'
+			dir: 'build_min'
+			baseUrl: 'js'
+			keepBuildDir: true
+			skipDirOptimize: false
+			optimize: "uglify2"
+			useStrict: true
+			removeCombined: true
+			optimizeCss: "standard"
+			modules: [
+				{
+					name: 'anchosen'
+					exclude: ['knockout', 'jquery', 'underscore']
+				}
+			]
+			paths:
+				jquery: "jquery"
+				knockout: "knockout"
+				underscore: "underscore"
+			shim:
+				underscore:
+					exports: "_"
+		requirejs.optimize config, (buildResponse) ->
+			cont?()
 
 exec = (command, env, cont) ->
 	nodejs_exec command, env, (error, stdout, stderr) ->
@@ -28,22 +82,23 @@ deps = (cont) ->
 				requirejsDest = fs.createWriteStream cwd + '/bin/js/require.js'
 				requirejsSource.pipe requirejsDest
 				requirejsDest.on 'close', () ->
-					cont() if cont?
+					cont?()
+
+deleteDir = (dir, cont) ->
+	if fs.existsSync dir
+		exec 'rm -R ' + dir, {}, (stdout) ->
+			cont?()
+	else
+		cont?()
 
 clean = (cont) ->
-	makeDirs = () ->
+
+	deleteDir 'bin', () ->
 		fs.mkdirSync 'bin'
 		fs.mkdirSync 'bin/js'
 		fs.mkdirSync 'bin/css'
 
-		cont() if cont?
-
-	if fs.existsSync 'bin'
-		exec 'rm -R bin', {}, (stdout) ->
-			makeDirs()
-
-	else
-		makeDirs()
+		deleteDir 'build', () -> deleteDir 'build_min'
 
 
 build = (cont) ->
@@ -51,11 +106,11 @@ build = (cont) ->
 
 compile_less = (cont) ->
 	exec 'lessc src/less/anchosen.less bin/css/anchosen.css', {}, (stdout) ->
-		cont() if cont?
+		cont?()
 
 compile_coffee = (cont) ->
-	exec 'coffee -co bin/js src/coffee', {}, (stdout) ->
-		cont() if cont?
+	exec 'coffee --bare -co bin/js src/coffee', {}, (stdout) ->
+		cont?()
 
 task 'all', 'compiles all of them!', () ->
 	clean () ->
@@ -69,3 +124,6 @@ task 'build', 'compiles the project itself', () ->
 
 task 'clean', 'cleans the bin directory', () ->
 	clean()
+
+task 'rjs', 'RequireJSs the library', () ->
+	rjs()

@@ -2,6 +2,7 @@
 	"name": "Anchosen",
 	"version": "0.1.0",
 	"dependencies": {
-		"less": "*"
+		"less": "*",
+		"requirejs": ">=2.0.6"
 	}
 }

@@ -2,75 +2,164 @@
 
 .anchosen {
 	font-size: 13px;
-
+	min-width: 150px;
 }
 
+// The main "virtual" search box for anchosen.
 div.anchosen-search-box {
-	.box-shadow(0 0 px #ffffff inset, 0 1px 0, 0.15);
-	.border-radius(3px);
-	.linear-neat-gradient(#eee, #fff);
+	.linear-top-gradient(#eee, #fff);
 	background-color: #fff;
 	border: 1px solid #aaa;
-	width: 300px;
 	cursor: text;
 	margin: 0;
 	padding: 0;
 	display: inline-block;
+	width: 100%;
+
+	// When the real input field is focused - apply some Chrome like styling
+	&.focus {
+		.box-shadow(0 0 5px, 0.3);
+		border: 1px solid #5897fb;
+	}
+
+	&.anchosen-working {
+		background-color: #eee;
+		.linear-top-gradient(#ddd, #eee);
+		&.focus {
+			border: 1px solid darken(#5897fb, 6%);
+		}
+	}
 }
 
+.anchosen-working {
+	cursor: wait !important;
+}
+
+// This is the actual input element
+// this needs to be as transparent as possible - so that the surrounding virtual input element
+// looks as if it was the input element
 input.anchosen-search-input {
 	background-color: transparent !important;
 	border-width: 0px !important;
 	outline-width: 0px !important;
-	display: block;
-	line-height: 13px;
+	vertical-align: middle;
 	font-size: 13px;
-	padding: 0px;
-	height: 21px;
-	margin: 3px 0 3px 3px;
-	padding: 3px 5px 3px 3px;
+	padding: 5px;
+	line-height: 15px;
+	display: inline-block;
+	margin: 1px 0;
 	.box-shadow(none);
+
+	&.anchosen-has-placeholder {
+		color: #aaa;
+	}
 }
 
+// The ol containing all the selected options (and the physical input box)
 ol.anchosen-selected-options {
 	padding: 0px;
 	margin: 0px;
-	display: block;
 	cursor: default;
+	height: auto !important;
 	&> li {
-		list-style: none;
-		display: block;
+		// Float the li elements up nicely
 		float: left;
-		background-color: #e4e4e4;
-		.box-shadow(0 0 2px #ffffff inset, 0 1px 0, 0.5);
-		.border-radius(3px);
-		.smooth-gradient(#f4f4f4, #f0f0f0, #e8e8e8, #eeeeee);
-		border: 1px solid #aaaaaa;
-		cursor: default;
+		// Remove the numbering
+		list-style: none;
+		display: inline-block;
 
-		line-height: 13px;
-		margin: 3px 0 3px 5px;
-		padding: 3px 5px 3px 5px;
+		// Make the actual selected options look great
+		&.anchosen-selected-option {
+			background-color: #e4e4e4;
+			.box-shadow(0 0 2px #ffffff inset, 0 1px 0, 0.05);
+			.border-radius(3px);
+			// Less has a bug which causes the mixin to set the wrong values for filter
+			// Let's fix this
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#eeeeee', GradientType=0 );
+			.smooth-gradient(#f4f4f4, #f0f0f0, #e8e8e8, #eeeeee);
+			border: 1px solid #aaaaaa;
+			cursor: default;
 
-
-		&> span {
-			display: inline-block;
-			&.anchosen-label {
-				/* Styles to support turning long labels into "long text her..."
-				display: inline-block;
-				text-overflow: ellipsis;
-				max-width: 120px;
-				overflow: hidden;
-				white-space: nowrap;
-				*/
+			line-height: 13px;
+			margin: 3px 0 3px 5px;
+			padding: 3px 5px 3px 5px;
+			&.marked {
+				background: #d4d4d4;
+				// Less has a bug which causes the mixin to set the wrong values for filter
+				// Let's fix this
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4d4d4', endColorstr='#dedede', GradientType=0 );
+				.smooth-gradient(#d4d4d4, #e0e0e0, #d8d8d8, #dedede);
 			}
 
-			&.anchosen-deselect-option {
-				cursor: pointer;
-				float: right;
-				padding-left: 4px;
+			white-space: nowrap;
+
+			&> span {
+				display: inline-block;
+				&.anchosen-label {
+					/* Styles to support turning long labels into "long text here..."
+					text-overflow: ellipsis;
+					max-width: 90%;
+					overflow: hidden;
+					white-space: nowrap; */
+				}
+				&.anchosen-deselect-option {
+					cursor: pointer;
+					padding-left: 4px;
+					width: 5px;
+				}
 			}
 		}
 	}
 }
 
+.anchosen-drop {
+	background-color: #fff;
+	border: 1px solid #aaa;
+	.box-shadow(0 4px 5px, 0.15);
+	position: absolute;
+	z-index: 1010;
+	left: 0;
+	max-height: 240px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+
+	&.drop-top {
+		border-bottom: 0;
+	}
+
+	&.drop-bottom {
+		border-top: 0;
+	}
+}
+
+ol.anchosen-available-options {
+	margin: -1px 0 0;
+	padding: 0;
+	.flex();
+	&> li {
+		line-height: 15px;
+		padding: 5px 6px;
+		margin: 0;
+		list-style: none;
+		&.anchosen-available-option, &.anchosen-choose-following, &.anchosen-create-new {
+			cursor: pointer;
+
+			&.highlighted {
+				.linear-neat-gradient(#3875d7, #2a62bc);
+
+				background-color: #3875d7;
+				color: #fff;
+			}
+		}
+
+		&.anchosen-no-results {
+			background-color: #f4f4f4;
+			cursor: default;
+		}
+	}
+
+	&.reverse {
+		.flex-reverse();
+	}
+}

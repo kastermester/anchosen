@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Anchosen test</title>
+		<link type="text/css" rel="stylesheet" href="../bin/css/anchosen.css">
+		<style type="text/css">
+			.anchosen {
+				font-family: Helvetica, Arial, sans-serif;
+			}
+
+			input {
+				font-family: Helvetica, Arial, sans-serif;
+			}
+
+			body {
+				overflow-y: scroll;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript" src="../bin/js/require.js" data-main="example.js"></script>
+		<div class="my-anchosen anc" tabindex="0">Anchosen goes <b>here</b>
+		</div>
+		<div style="height: 300px">&nbsp;</div>
+		<div class="my-anchosen" style="width: 300px; float: left">I'm being cloned!</div>
+		<div class="my-anchosen-clone" style="width: 300px; float: right">Loading clone...</div>
+
+	</body>
+</html>

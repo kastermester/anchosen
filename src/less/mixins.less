@@ -1,7 +1,7 @@
 .box-shadow(@style){
 	box-shadow: @style;
 	-webkit-box-shadow: @style;
-	-moz-box-shadow: @style;	
+	-moz-box-shadow: @style;
 }
 
 .box-shadow(@style, @color) when(iscolor(@color)) {
@@ -13,7 +13,7 @@
 .box-shadow(@style, @style-more, @color) when(iscolor(@color)) {
 	box-shadow: @style, @style-more @color;
 	-webkit-box-shadow: @style, @style-more @color;
-	-moz-box-shadow: @style, @style-more @color;	
+	-moz-box-shadow: @style, @style-more @color;
 }
 
 .box-shadow(@style, @alpha) when(isnumber(@alpha)) {
@@ -34,7 +34,8 @@
 }
 
 .smooth-gradient(@start-color, @midstart-color, @midend-color, @end-color) {
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 ); 
+	// LESS be buggy
+	//filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 );
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(20%, @start-color), color-stop(50%, @midstart-color), color-stop(52%, @midend-color), color-stop(100%, @end-color));
 	background-image: -webkit-linear-gradient(top, @start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
 	background-image: -moz-linear-gradient(top, @start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
@@ -42,13 +43,22 @@
 	background-image: linear-gradient(@start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
 }
 
-.linear-neat-gradient(@start-color, @end-color) {
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 ); 
+.linear-top-gradient(@start-color, @end-color) {
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 );
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(1%, @start-color), color-stop(15%, @end-color));
 	background-image: -webkit-linear-gradient(top, @start-color 1%, @end-color 15%);
 	background-image: -moz-linear-gradient(top, @start-color 1%, @end-color 15%);
 	background-image: -o-linear-gradient(top, @start-color 1%, @end-color 15%);
-	background-image: linear-gradient(@start-color 1%, @end-color 15%);	
+	background-image: linear-gradient(@start-color 1%, @end-color 15%);
+}
+
+.linear-neat-gradient(@start-color, @end-color){
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 );
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(20%, @start-color), color-stop(90%, @end-color));
+	background-image: -webkit-linear-gradient(top, @start-color 20%, @end-color 90%);
+	background-image: -moz-linear-gradient(top, @start-color 20%, @end-color 90%);
+	background-image: -o-linear-gradient(top, @start-color 20%, @end-color 90%);
+	background-image: linear-gradient(@start-color 20%, @end-color 90%);
 }
 
 .box-sizing(@style) {
@@ -57,8 +67,25 @@
 	-webkit-box-sizing: @style;
 }
 
-.inline-flex(){
+.flex(){
 	display: -moz-flex;
 	display: -webkit-flex;
 	display: flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+
+}
+
+.flex-reverse(){
+	flex-direction: column-reverse;
+	-webkit-flex-direction: column-reverse;
+	-moz-flex-direction: column-reverse;
+}
+
+.transition(@style){
+	transition: @style;
+	-webkit-transition: @style;
+	-o-transition: @style;
+	-moz-transition: @style;
 }

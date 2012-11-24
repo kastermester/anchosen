@@ -1,9 +1,20 @@
-require [
-	'jquery'
-	'anchosen/anchosen'
-	'anchosen/bindings/search_field'
-], ($, Anchosen) ->
-	anc = new Anchosen $('#anchosen'),
+requirejs.config({
+	baseUrl: '/bin/js',
+	paths: {
+		"jquery": "jquery",
+		"knockout": "knockout",
+		"underscore": "underscore"
+	},
+	shim: {
+		"underscore": {
+			"exports": "_"
+		}
+	}
+});
+require(['jquery', 'anchosen'], function($){
+	$('.my-anchosen').anchosen({
+		createNewEnabled: true,
+		substringMatch: true,
 		options: [
 			{ "value": "AF", "label":"Afghanistan" },
 			{ "value": "AL", "label":"Albania" },
@@ -248,5 +259,17 @@ require [
 			{ "value": "YE", "label":"Yemen" },
 			{ "value": "ZM", "label":"Zambia" },
 			{ "value": "ZW", "label":"Zimbabwe" }
-		]
-		selected: [{'label': 'Togo', 'value': "TG"}]
+		],
+		selected: [{'label': 'Togo', 'value': "TG"}],
+		placeholder: 'Select a country...',
+		chooseFollowingThreshold: 0
+	});
+	vmLast = $('.my-anchosen').last().anchosen('viewmodel');
+	$('.my-anchosen-clone').anchosen({
+		createNewEnabled: false,
+		substringMatch: false,
+		options: vmLast.options,
+		selected: vmLast.selectedOptions,
+		placeholder: 'Select a country...'
+	});
+});
