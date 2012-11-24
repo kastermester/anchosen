@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>Anchosen test</title>
+		<script type="text/javascript" src="bin/js/require.js" data-main="bin/js/bootstrap.js"></script>
+		<link type="text/css" rel="stylesheet" href="bin/css/anchosen.css">
+		<style type="text/css">
+			.anchosen {
+				font-family: Helvetica, Arial, sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript" src="bin/js/anchosen/main.js"></script>
+
+		<div id="anchosen" class="anchosen">
+			<div class="anchosen-search-box">
+				<ol data-bind="foreach: selectedOptions" class="anchosen-selected-options">
+					<li><span class="anchosen-deselect-option">&times;</span><span data-bind="text: label" class="anchosen-label"></span></li>
+				</ol>
+				<input type="text" class="anchosen-search-input" data-bind="searchField: searchString, hasfocus: searchFieldFocused">
+			</div>
+			<ol data-bind="foreach: availableOptions, visible: availableOptionsVisible" class="anchosen-available-options">
+				<li data-bind="text: label, css: { highlighted: $root.isHighlighted($data) }"></li>
+			</ol>
+		</div>
+	</body>
+</html>

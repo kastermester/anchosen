@@ -1,0 +1,64 @@
+.box-shadow(@style){
+	box-shadow: @style;
+	-webkit-box-shadow: @style;
+	-moz-box-shadow: @style;	
+}
+
+.box-shadow(@style, @color) when(iscolor(@color)) {
+	box-shadow: @style @color;
+	-webkit-box-shadow: @style @color;
+	-moz-box-shadow: @style @color;
+}
+
+.box-shadow(@style, @style-more, @color) when(iscolor(@color)) {
+	box-shadow: @style, @style-more @color;
+	-webkit-box-shadow: @style, @style-more @color;
+	-moz-box-shadow: @style, @style-more @color;	
+}
+
+.box-shadow(@style, @alpha) when(isnumber(@alpha)) {
+	.box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+
+.box-shadow(@style, @style-more, @alpha) when(isnumber(@alpha)) {
+	.box-shadow(@style, @style-more, rgba(0, 0, 0, @alpha));
+}
+
+.border-radius(@width) {
+	border-radius: @width;
+	-webkit-border-radius: @width;
+	-moz-border-radius: @width;
+	background-clip: padding-box;
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+}
+
+.smooth-gradient(@start-color, @midstart-color, @midend-color, @end-color) {
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 ); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(20%, @start-color), color-stop(50%, @midstart-color), color-stop(52%, @midend-color), color-stop(100%, @end-color));
+	background-image: -webkit-linear-gradient(top, @start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
+	background-image: -moz-linear-gradient(top, @start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
+	background-image: -o-linear-gradient(top, @start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
+	background-image: linear-gradient(@start-color 20%, @midstart-color 50%, @midend-color 52%, @end-color 100%);
+}
+
+.linear-neat-gradient(@start-color, @end-color) {
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{start-color}', endColorstr='@{end-color}', GradientType=0 ); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(1%, @start-color), color-stop(15%, @end-color));
+	background-image: -webkit-linear-gradient(top, @start-color 1%, @end-color 15%);
+	background-image: -moz-linear-gradient(top, @start-color 1%, @end-color 15%);
+	background-image: -o-linear-gradient(top, @start-color 1%, @end-color 15%);
+	background-image: linear-gradient(@start-color 1%, @end-color 15%);	
+}
+
+.box-sizing(@style) {
+	box-sizing: @style;
+	-moz-box-sizing: @style;
+	-webkit-box-sizing: @style;
+}
+
+.inline-flex(){
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: flex;
+}

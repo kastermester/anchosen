@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/Kaare/Sites/Anchosen",
+			"file_exclude_patterns":
+			[
+				"project.sublime-project",
+				"project.sublime-workspace"
+			]
+		}
+	]
+}

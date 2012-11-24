@@ -1,0 +1,756 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ma",
+				"maxKeyLength"
+			],
+			[
+				"max",
+				"maxKeyLength-strlen"
+			],
+			[
+				"en",
+				"encodables"
+			],
+			[
+				"extr",
+				"extraNewLine"
+			],
+			[
+				"key",
+				"keyStr"
+			],
+			[
+				"pro",
+				"property"
+			],
+			[
+				"cre",
+				"createQuery"
+			],
+			[
+				"array_key",
+				"array_key_exists"
+			],
+			[
+				"sel",
+				"selectedType"
+			],
+			[
+				"ex",
+				"extraMenuEntries"
+			],
+			[
+				"_de",
+				"_deleteRoles"
+			],
+			[
+				"sele",
+				"selectedType"
+			],
+			[
+				"col",
+				"columns"
+			],
+			[
+				"select",
+				"selectedEntity"
+			],
+			[
+				"selec",
+				"selectedEntity"
+			],
+			[
+				"act",
+				"activeTransaction"
+			],
+			[
+				"ent",
+				"entity"
+			],
+			[
+				"_lis",
+				"_listRoles"
+			],
+			[
+				"_list",
+				"_listUsers"
+			],
+			[
+				"em",
+				"empty"
+			],
+			[
+				"l",
+				"limit"
+			],
+			[
+				"_",
+				"_write"
+			],
+			[
+				"array_ke",
+				"array_key_exists"
+			],
+			[
+				"arr",
+				"array"
+			],
+			[
+				"surv",
+				"survey_uid"
+			],
+			[
+				"R",
+				"R paperPrototype"
+			],
+			[
+				"db_Te",
+				"db_Telefon"
+			],
+			[
+				"sci",
+				"scisco_surveys"
+			],
+			[
+				"auth",
+				"auth_join"
+			],
+			[
+				"v_",
+				"v_prev_prev"
+			],
+			[
+				"db_",
+				"db_Adresse"
+			],
+			[
+				"sch",
+				"schema1UID"
+			],
+			[
+				"import_m",
+				"import_must_not_map"
+			],
+			[
+				"read_",
+				"read_string"
+			],
+			[
+				"read_str",
+				"read_string"
+			],
+			[
+				"com",
+				"comp_sig_len"
+			],
+			[
+				"0x0",
+				"0x000000ff"
+			],
+			[
+				"code",
+				"code_length"
+			],
+			[
+				"prg",
+				"prg_endian"
+			],
+			[
+				"la",
+				"lambdas"
+			],
+			[
+				"lam",
+				"lambda_count"
+			],
+			[
+				"read",
+				"read_byte"
+			],
+			[
+				"end",
+				"endian"
+			],
+			[
+				"decode_",
+				"decode_program"
+			],
+			[
+				"endian",
+				"prg_endian"
+			],
+			[
+				"scstr",
+				"scstralloc"
+			],
+			[
+				"monitor",
+				"monitor_respondent_data"
+			],
+			[
+				"scisc",
+				"scisco_monitors"
+			],
+			[
+				"_d",
+				"_dbfields"
+			],
+			[
+				"respon",
+				"respondent_id"
+			],
+			[
+				"monitor_",
+				"monitor_respondents"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"mysql_real",
+				"mysql_real_escape_string"
+			],
+			[
+				"TYPE_",
+				"TYPE_BOOL"
+			],
+			[
+				"TY",
+				"TYPE_INT"
+			],
+			[
+				"lbl",
+				"lblEndIf"
+			],
+			[
+				"DIVI",
+				"DIVISION_BY_ZERO"
+			],
+			[
+				"sche",
+				"schema1UID"
+			],
+			[
+				"map",
+				"mapRespToTime"
+			],
+			[
+				"html",
+				"htmlentities"
+			],
+			[
+				"sle",
+				"selectedSame"
+			],
+			[
+				"schema",
+				"schemaTime"
+			],
+			[
+				"schem",
+				"schema2UID"
+			],
+			[
+				"sli",
+				"sliceStruct"
+			],
+			[
+				"ro",
+				"rootNode"
+			],
+			[
+				"BTr",
+				"BTreeHeader"
+			],
+			[
+				"memory",
+				"memoryMapper"
+			],
+			[
+				"mapped",
+				"mappedSize"
+			],
+			[
+				"grow",
+				"growToFit"
+			],
+			[
+				"gr",
+				"growToFit"
+			],
+			[
+				"fd",
+				"Fd"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"ip",
+				"Package Control: Install Package"
+			],
+			[
+				"set co",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: Ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: Inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Kaare/Sites/valcon/fuel/packages/accesscontrol/classes/model/abstractuipermission.php",
+		"/Users/Kaare/Sites/valcon/fuel/app/classes/model/role.php",
+		"/Users/Kaare/Sites/valcon/fuel/packages/doctrine2/Doctrine/ORM/Query/ResultSetMapping.php",
+		"/Users/Kaare/Sites/valcon/fuel/app/tasks/createtestdata.php",
+		"/Users/Kaare/Sites/valcon/project.sublime-project",
+		"/Users/Kaare/Sites/valcon/fuel/packages/doctrine2/classes/model/base.php",
+		"/Users/Kaare/Sites/valcon/fuel/packages/accesscontrol/tasks/acl.php",
+		"/Users/Kaare/Sites/valcon/fuel/packages/accesscontrol/classes/model/deleteuipermission.php",
+		"/Users/Kaare/Sites/valcon/fuel/packages/accesscontrol/classes/model/readpermission.php",
+		"/Users/Kaare/Sites/valcon/fuel/packages/accesscontrol/classes/types/permission.php",
+		"/Users/Kaare/Sites/valcon/valcon-client/coffee/dummylogin/controller.coffee",
+		"/Users/Kaare/Sites/valcon/fuel/packages/data-importer/classes/Database/CreateTempTable.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/schema/print/generatePage.php",
+		"/Users/Kaare/Sites/NIRASKon/import.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/header.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/PHP/CLASSES/renderingEngine_class.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/TEMPLATES/LAYOUTS/HTML/STANDARD/startPage.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/backend/scisco_api.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/do_print_schema.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/do_export_frequency.php",
+		"/Users/Kaare/Sites/NIRASKon/.htaccess",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/schema/print/body.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/schema/print/generatePageWeb.php",
+		"/Users/Kaare/Documents/datadump.sql",
+		"/Users/Kaare/Documents/AU/dEkspSys/rapport/rapport.tex",
+		"/Users/Kaare/Documents/AU/dEkspSys/rapport/rapport.bib",
+		"/Users/Kaare/Documents/AU/dEkspSys/rapport/rapport.tex.orig",
+		"/Users/Kaare/Documents/AU/dEkspSys/CD/readme.tex",
+		"/Users/Kaare/Sites/NIRASKon/CORE/PHP/CLASSES/respondent_class.php",
+		"/Users/Kaare/Downloads/FortAwesome-Font-Awesome-563a6f3/less/font-awesome.less",
+		"/Users/Kaare/Documents/AU/dEkspSys/obligatorisk aflevering 2/obligatoriskAflevering.tex",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/src/luac/luac.c",
+		"/Users/Kaare/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt5/um.cc",
+		"/Users/Kaare/Documents/AU/dOvs/src/resource.ml",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/functions/data_export/output_spss/action.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/resp/res_lists/action.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/respondents.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/index.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/do_export_difference.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/do_export_horizontal.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/export_difference.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/do_new_respondent.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/backend/data.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/add_to_phase.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/respondent.php",
+		"/Users/Kaare/Downloads/csom/src/interpreter/Interpreter.c",
+		"/Users/Kaare/Downloads/csom/src/main.c",
+		"/Users/Kaare/Downloads/csom/src/misc/String.h",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/VMSymbol.h",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/Signature.c",
+		"/Users/Kaare/Downloads/csom/src/misc/Hashmap.h",
+		"/Users/Kaare/Downloads/csom/src/misc/defs.h",
+		"/Users/Kaare/Downloads/csom/src/vm/Universe.c",
+		"/Users/Kaare/Downloads/csom/src/memory/gc.h",
+		"/Users/Kaare/Downloads/csom/src/memory/gc.c",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/VMClass.h",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/VMObject.h",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/OOObject.c",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/VMClass.c",
+		"/Users/Kaare/Downloads/csom/src/vmobjects/OOObject.h",
+		"/Users/Kaare/Downloads/csom-norl/foo.txt",
+		"/Users/Kaare/Projects/SkiiApp/data/planai-data.xml",
+		"/Users/Kaare/Documents/AU/LaTeX/preamble.tex",
+		"/Users/Kaare/Documents/AU/LaTeX/cMatMol1/formelsamling.tex",
+		"/Users/Kaare/Documents/AU/VMSA/VM/project1.tex",
+		"/Users/Kaare/Documents/AU/LaTeX/dVid.tex",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/ackermann.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/n_body.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/random.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/sieve.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/strcat.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/fibo.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/euler2.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/src/opcode.c",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/status.txt",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3/tests/matrix.lua",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt3_Filer/status.txt",
+		"/Users/Kaare/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/Kaare/Sites/NIRASKon/import.backup.php",
+		"/Users/Kaare/Documents/MapReduceCompiler/src/parser/output/MapReduceQParser.c",
+		"/Users/Kaare/Downloads/antlr-3.4/tool/src/main/resources/org/antlr/codegen/templates/Java/Java.stg",
+		"/Users/Kaare/Downloads/antlr-3.4/tool/src/main/resources/org/antlr/codegen/templates/Go/Go.stg",
+		"/Users/Kaare/Downloads/antlr-3.4/tool/src/main/resources/org/antlr/codegen/templates/Go/Dbg.stg",
+		"/Users/Kaare/Downloads/antlr-3.4/tool/src/main/resources/org/antlr/codegen/templates/Go/AST.stg",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/print.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/print.c",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/values.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/values-inline.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/main.c",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/instructions-inline.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/predefined-functions.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/predefined-functions.c",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/decoder.c",
+		"/Users/Kaare/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/scstring.c",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/decoder.h",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/decoder.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/CMakeLists.txt",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/decoder.c",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/util.c",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt2/util.h",
+		"/users/Kaare/Documents/AU/VMSA/VM/Projekt1_2/um.c",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/main.c",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/scstring.c",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/scstring.h",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/util.c",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/util.h",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt2/CMakeLists.txt",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/monitoring/delete/action.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/monitoring/editUsers/action.php",
+		"/Users/Kaare/Library/Application Support/Sublime Text 2/Packages/Default/Global.sublime-settings",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt1_1/ea.sml",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt1_2/test.c",
+		"/Users/Kaare/Documents/AU/VMSA/VM/Projekt1_1/ae.sml",
+		"/Users/Kaare/Library/Application Support/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/Users/Kaare/Sites/NIRASKon/CORE/SCISCO/PLUGINS/surveys/monitoring/helpers/postData.php",
+		"/Users/Kaare/Downloads/datadump.sql",
+		"/Users/Kaare/Sites/NIRASKon/monitor/backend/TransformTemplateToZipArchive.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/TEMPLATES/LAYOUTS/printLookAndFeel.php",
+		"/Users/Kaare/Sites/NIRASKon/CORE/TEMPLATES/LAYOUTS/RTF/STANDARD/layoutFunctions.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/search.php",
+		"/Users/Kaare/Sites/NIRASKon/monitor/layout/css/list.css",
+		"/Users/Kaare/Sites/NIRASKon/monitor/layout/css/search.css",
+		"/Users/Kaare/Documents/godocdb/diskutils/diskutils.go",
+		"/Users/Kaare/Documents/godocdb/indexes/btree/btree.go",
+		"/Users/Kaare/Documents/godocdb/indexes/btree/Makefile",
+		"/Users/Kaare/Documents/godocdb/main.go"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"<open folders>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"type",
+			"model->get_encodable_properties()",
+			"true",
+			".\n",
+			"private",
+			".\n",
+			"rsm",
+			"createNativeQuery",
+			"$role",
+			"role",
+			"offset",
+			"_list",
+			"_createMenu",
+			"typeSelected",
+			"$this->selected",
+			"Selected",
+			"selected",
+			";\n",
+			"main",
+			"Main",
+			"main",
+			"Main",
+			"main",
+			"choise",
+			"[\"theTitle\"] =",
+			"unserialize_utf8",
+			"konstruk",
+			"udarbejdelse",
+			"igang",
+			"skal laves til/om",
+			"Stolter",
+			"anhxx9k",
+			"anhuyzz",
+			"azi7g9s",
+			"qwkf7kt",
+			"8dkjiig",
+			"7rt494g",
+			"4dirtnb",
+			"4dim64x",
+			"4dmg5mv",
+			"7rt494g",
+			"anhuyzz",
+			"fvq2gmb",
+			"fg27aw5",
+			"fgh33zi",
+			"fgbavtw",
+			"fft5sr8",
+			"fgk6r4e",
+			"dr56byn",
+			"dr3eqnc",
+			"t6k2cby",
+			"avuhftu",
+			"main(",
+			"main()",
+			"dr3eqnc",
+			"mevurxb",
+			"tpae4ri",
+			"(.*)",
+			"^Interview(\\d)\\t(.*)$",
+			"db_dato",
+			"UPDATE",
+			"Dato",
+			"db_Dato",
+			"Dato",
+			"data",
+			"Q1246263443532_sQ3977",
+			"Q1244115019001_sQ5508",
+			"import_must_map",
+			"22w28jm",
+			"tnjxjzk",
+			"mevurxb",
+			"qguazim",
+			"qgdeff6",
+			"qg9sbkq",
+			"qfkbs4h",
+			"f2mbsb9",
+			"h38mssr",
+			"du9e24t",
+			"afpr5pd",
+			"anx8v98",
+			"h325tn4",
+			"anx8v98",
+			"afpr5pd",
+			"5927qmq",
+			"tdvhk43",
+			"s8gmrs3",
+			"eym6e4e",
+			"57gr4gt",
+			"26wn7re",
+			"5fhwkcb",
+			"25pay8r",
+			"25p8rcv",
+			"kdgp7da",
+			"j6p28k5",
+			"fky58wj",
+			"rny2wpx",
+			"stzhedy",
+			"afpr5pd",
+			"do_send",
+			"Universe_new_array_from_argv",
+			"#define SIZE_DIFF_VMOBJECT",
+			"#define SIZE_DIFF_VMOBJECt",
+			"VMClass_new",
+			"METHOD(VMClass, ",
+			"METHOD(VMClass",
+			"METHOD",
+			"#define METHOD",
+			"object_size",
+			"#define INIT",
+			"#define INIOT",
+			"#define SIZE_DIFF_VMOBJECT",
+			"#define INIT",
+			"INIT",
+			"#define VTABLE",
+			"super_class",
+			"#define SEND",
+			"#define p",
+			"typedef *",
+			"typedef p",
+			"#define p",
+			"#define VTABLE",
+			"gc_merge_free_spaces",
+			"_free_list_entry",
+			"pVMSymbol",
+			"planai3er_bottom",
+			"47.3845",
+			"47.384500",
+			"point_3_9"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"$1 \\\\\\\\",
+			"\\\\emph{Interview$1}\\t&\\t$2 \\\\\\\\",
+			"\\emph{Interview$1}\\t&\\t$2 \\\\\\\\",
+			"Interview$1\\t&\\t$2 \\\\\\\\",
+			"Interview$1\\t&\\t$2 \\\\",
+			"Interview$1\\t&\\t$2",
+			"debug_printf",
+			"endian",
+			"  ",
+			"LIT (LIT_INT $1)",
+			"type_check",
+			"DISKPAGESIZE",
+			"MemoryMappedRegion",
+			"MemoryMapper",
+			"Varset.t VarMap.t",
+			"fold_right",
+			"fold_left",
+			"constructor"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 28.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"doctrinmodelbase",
+				"fuel/packages/doctrine2/classes/model/base.php"
+			],
+			[
+				"deleteui",
+				"fuel/packages/accesscontrol/classes/model/deleteuipermission.php"
+			],
+			[
+				"abstra",
+				"fuel/packages/accesscontrol/classes/model/abstractuipermission.php"
+			],
+			[
+				"permission",
+				"fuel/packages/accesscontrol/classes/model/readpermission.php"
+			],
+			[
+				"rol",
+				"fuel/app/classes/model/role.php"
+			],
+			[
+				"resultmap",
+				"fuel/packages/doctrine2/Doctrine/ORM/Query/ResultSetMapping.php"
+			],
+			[
+				"createtes",
+				"fuel/app/tasks/createtestdata.php"
+			],
+			[
+				"createte",
+				"fuel/app/tasks/createtestdata.php"
+			],
+			[
+				"createt",
+				"fuel/packages/data-importer/classes/Database/CreateTempTable.php"
+			],
+			[
+				"signature",
+				"vmobjects/Signature.c"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 176.0,
+	"status_bar_visible": true
+}

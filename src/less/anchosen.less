@@ -1,0 +1,76 @@
+@import 'mixins.less';
+
+.anchosen {
+	font-size: 13px;
+
+}
+
+div.anchosen-search-box {
+	.box-shadow(0 0 px #ffffff inset, 0 1px 0, 0.15);
+	.border-radius(3px);
+	.linear-neat-gradient(#eee, #fff);
+	background-color: #fff;
+	border: 1px solid #aaa;
+	width: 300px;
+	cursor: text;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+input.anchosen-search-input {
+	background-color: transparent !important;
+	border-width: 0px !important;
+	outline-width: 0px !important;
+	display: block;
+	line-height: 13px;
+	font-size: 13px;
+	padding: 0px;
+	height: 21px;
+	margin: 3px 0 3px 3px;
+	padding: 3px 5px 3px 3px;
+	.box-shadow(none);
+}
+
+ol.anchosen-selected-options {
+	padding: 0px;
+	margin: 0px;
+	display: block;
+	cursor: default;
+	&> li {
+		list-style: none;
+		display: block;
+		float: left;
+		background-color: #e4e4e4;
+		.box-shadow(0 0 2px #ffffff inset, 0 1px 0, 0.5);
+		.border-radius(3px);
+		.smooth-gradient(#f4f4f4, #f0f0f0, #e8e8e8, #eeeeee);
+		border: 1px solid #aaaaaa;
+		cursor: default;
+
+		line-height: 13px;
+		margin: 3px 0 3px 5px;
+		padding: 3px 5px 3px 5px;
+
+
+		&> span {
+			display: inline-block;
+			&.anchosen-label {
+				/* Styles to support turning long labels into "long text her..."
+				display: inline-block;
+				text-overflow: ellipsis;
+				max-width: 120px;
+				overflow: hidden;
+				white-space: nowrap;
+				*/
+			}
+
+			&.anchosen-deselect-option {
+				cursor: pointer;
+				float: right;
+				padding-left: 4px;
+			}
+		}
+	}
+}
+
