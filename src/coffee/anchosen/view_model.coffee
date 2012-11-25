@@ -87,7 +87,11 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				@enabled() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
 			).extend throttle: 100
 
-			@noResultsVisible = ko.computed () => !@createNewEnabled() && @availableOptions().length == 0 && @options().length > 0
+			@noResultsVisible = ko.computed () =>
+				!@createNewEnabled() &&
+				@availableOptions().length == 0 &&
+				@options().length > 0 &&
+				@searchString().length > 0
 
 			@highlighted = ko.computed
 				read: () =>
