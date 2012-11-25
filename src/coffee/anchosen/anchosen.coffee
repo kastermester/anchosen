@@ -103,7 +103,7 @@ define [
 							<span data-bind="text: label, css: { \'anchosen-working\': $root.disabled }" class="anchosen-label"></span><span class="anchosen-deselect-option" data-bind="css: { \'anchosen-working\': $root.disabled }">&times;</span>
 						</li>
 					<!-- /ko -->
-					<li><input type="text" autocomplete="off" class="anchosen-search-input" data-bind="anchosenSearchField: searchString, hasfocus: searchFieldFocused, attr: { placeholder: placeholderText, maxlength: searchFieldMaxLength }, enable: enabled, css: { \'anchosen-working\': disabled }"></li>
+					<li><input type="text" autocomplete="off" class="anchosen-search-input" data-bind="anchosenSearchField: { text: searchString, highlightPrevious: highlightPrevious, highlightNext: highlightNext, isLastSelectedMarked: isLastSelectedMarked, deselectLast: deselectLast, reset: resetSearch, selectHighlighted: selectHighlighted }, hasfocus: searchFieldFocused, attr: { placeholder: placeholderText, maxlength: searchFieldMaxLength }, enable: enabled, css: { \'anchosen-working\': disabled }"></li>
 				</ol>
 			</div>
 			<div class="anchosen-drop" data-bind="anchosenFadeVisible: availableOptionsVisible">

@@ -7,16 +7,20 @@ define ['jquery', 'knockout'], ($, ko) ->
 	ko.bindingHandlers.anchosenSearchField =
 		init: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) ->
 			$el = $ element
-			value = valueAccessor()
-			val = ko.utils.unwrapObservable value
-			$el.val val
+			binding = valueAccessor()
+
+
+			text = binding.text
+
+			$el.val ko.utils.unwrapObservable(text)
+
 			callback = () ->
 				val = $el.val()
-				value val if val != $el.attr('placeholder')
-			$el.bind 'input.anchosen', callback
+				text val if val != $el.attr('placeholder')
+			$el.bind 'input.anchosen', callback if ko.isObservable text
 
 			# IE doesn't fire input events on text deletions, only additions *sigh* who ever thought that was a great idea?
-			if $.browser.msie
+			if $.browser.msie && ko.isObservable text
 				$el.bind 'keyup.anchosen', callback
 
 
@@ -24,23 +28,27 @@ define ['jquery', 'knockout'], ($, ko) ->
 				switch e.keyCode
 					when UPARROW
 						e.preventDefault()
-						viewModel.highlightPrevious()
+						binding.highlightPrevious.call(viewModel) if typeof binding.highlightPrevious == 'function'
 					when DOWNARROW
 						e.preventDefault()
-						viewModel.highlightNext()
+						binding.highlightNext.call(viewModel) if typeof binding.highlightNext == 'function'
 					when BACKSPACE
-						if value() == ''
-							if viewModel.lastSelectedIsMarked()
-								viewModel.deselectLast()
-							else
-								viewModel.lastSelectedIsMarked true
+						if ko.utils.unwrapObservable(text) == ''
+							if ko.utils.unwrapObservable(binding.isLastSelectedMarked)
+								binding.deselectLast.call(viewModel) if typeof binding.deselectLast == 'function'
+							else if ko.isObservable(binding.isLastSelectedMarked)
+								binding.isLastSelectedMarked true
+
 
 			$el.bind 'keyup.anchosen', (e) ->
 				switch e.keyCode
-					when ESCAPE then viewModel.resetSearch(deselect = true)
-					when ENTER then viewModel.selectHighlighted()
+					when ESCAPE then binding.reset.call(viewModel, true) if typeof binding.reset == 'function'
+					when ENTER then binding.selectHighlighted.call(viewModel) if typeof binding.selectHighlighted == 'function'
 
 
 		update: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) ->
 			$el = $ element
-			$el.val ko.utils.unwrapObservable(valueAccessor())
+
+			text = ko.utils.unwrapObservable(valueAccessor()).text
+
+			$el.val ko.utils.unwrapObservable(text)

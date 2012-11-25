@@ -106,7 +106,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 					if idx > -1
 						@highlightedIndex idx
 
-			@lastSelectedIsMarked = ko.observable(false)
+			@isLastSelectedMarked = ko.observable(false)
 
 			@chooseFollowingVisible = ko.computed () =>
 				return false unless @chooseFollowingEnabled()
@@ -119,10 +119,10 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			@subscriptions = []
 			@subscriptions.push @delayedSearchString.subscribe () =>
 				@highlightedIndex -2
-				@lastSelectedIsMarked false
+				@isLastSelectedMarked false
 
 			@subscriptions.push @searchFieldFocused.subscribe () =>
-				@lastSelectedIsMarked false
+				@isLastSelectedMarked false
 
 			@subscriptions.push @availableOptionsVisible.subscribe () => @resetSearch()
 
@@ -228,7 +228,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 		deselectLast: () ->
 			return unless @enabled()
 			return if @selectedOptions().length == 0
-			@lastSelectedIsMarked(false)
+			@isLastSelectedMarked(false)
 			@deselectOption @selectedOptions()[@selectedOptions().length-1]
 
 		addAndKeepSortOrder: (option, observableArray) ->
@@ -246,12 +246,12 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 		isMarked: (index) ->
 			index = index()
-			@lastSelectedIsMarked() && index+1 == @selectedOptions().length
+			@isLastSelectedMarked() && index+1 == @selectedOptions().length
 
 		resetSearch: (deselect = false) ->
 			@searchString('')
 			@highlightedIndex(-2)
-			@lastSelectedIsMarked(false)
+			@isLastSelectedMarked(false)
 
 			@searchFieldFocused(false) if deselect
 
