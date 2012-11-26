@@ -97,7 +97,8 @@ There's plenty of options to set when working with Anchosen - here is a complete
 	},
 	substringMatch: false, // Default matching algorithm is String.startsWith (case insensitive). Change this to true to enable case insensitive substring matching instead.
 	maximumSelectionsAllowed: 0, // Set a maximum of how many selections can be made. 0 Means no limit
-	maximumSelectionsReachedText: 'Maximum of {0} items reached' // Set the text to be shown once the limit has been reached.
+	maximumSelectionsReachedText: 'Maximum of {0} items reached', // Set the text to be shown once the limit has been reached.
+	automaticClear: true // Should the input field be cleared when focus is lost?
 }
 ```
 

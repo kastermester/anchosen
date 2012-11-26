@@ -17,6 +17,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			maximumSelectionsAllowed: 0 # 0 for no limit
 			maximumSelectionsReachedText: 'Maximum of {0} items reached'
+			automaticClear: true
 		subscriptions: null
 
 		disposed: false
@@ -31,6 +32,8 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			).extend throttle: 1
 
 			@reverseShowOrder = ko.observable(false)
+
+			@automaticClear = ko.observable(options.automaticClear)
 
 			@maximumSelectionsAllowed = ko.observable(options.maximumSelectionsAllowed)
 			@maximumSelectionsReachedText = ko.observable(options.maximumSelectionsReachedText)
@@ -83,9 +86,11 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 				return result
 
-			@availableOptionsVisible = ko.computed(() =>
+			@availableOptionsVisibleNoThrottle = ko.computed(() =>
 				@enabled() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
-			).extend throttle: 100
+			)
+
+			@availableOptionsVisible = @availableOptionsVisibleNoThrottle.extend throttle: 100
 
 			@noResultsVisible = ko.computed () =>
 				!@createNewEnabled() &&
@@ -124,7 +129,8 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			@subscriptions.push @searchFieldFocused.subscribe () =>
 				@isLastSelectedMarked false
 
-			@subscriptions.push @availableOptionsVisible.subscribe () => @resetSearch()
+			# In order to keep things working as intended and as expected, bind up against the non-throttled version
+			@subscriptions.push @availableOptionsVisibleNoThrottle.subscribe () => @resetSearch() if @automaticClear()
 
 			@createNewText = ko.observable(options.createNewText)
 			@createNewVisible = ko.computed () => @createNewEnabled() && @delayedSearchString() != '' && @availableOptions().length == 0 && @singleSelectionAllowed()
@@ -258,10 +264,31 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 		createNew: () ->
 			return unless @enabled()
 			return unless @singleSelectionAllowed()
-			@resetSearch()
+			text = @delayedSearchString()
+
+			automaticClear = @automaticClear()
+			@automaticClear(false)
+
 			@enabled(false)
-			@createNewHandler @delayedSearchString(), (model) =>
+			@createNewHandler text, (model) =>
 				return if @disposed
+				unless model?
+					# Return and re-enable the ViewModel if the creation failed
+					@enabled(true)
+					# Reset the automatic clear back to its original value
+					# For some, still unclear reason, we need a delay in here
+					# Otherwise the field will be magically reset
+					# I suspect this has to do with the fact that we fade in the search field
+					setTimeout(() =>
+						@automaticClear(automaticClear)
+						if !@searchFieldFocused()
+							# If the field is not focused, clear it
+							@resetSearch() && @automaticClear()
+					, 250)
+					return
+
+				@automaticClear(automaticClear)
+				@resetSearch()
 				@selectedOptions.push model
 				@enabled(true)
 
