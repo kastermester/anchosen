@@ -40,7 +40,9 @@ define [
 				e.preventDefault()
 				viewModel.searchFieldFocused(true)
 			@$el.delegate 'ol.anchosen-available-options > li.anchosen-available-option', 'click.anchosen', (e) ->
-				viewModel.selectOption ko.dataFor this
+				keepText = (browser.isMac && e.metaKey) || (!browser.isMac && e.ctrlKey) || e.shiftKey
+				viewModel.selectOption(ko.dataFor(this), keepText)
+				that.$searchField.select() if keepText
 
 			@$el.delegate 'ol.anchosen-available-options > li.anchosen-choose-following', 'click.anchosen', (e) ->
 				viewModel.chooseFollowing()

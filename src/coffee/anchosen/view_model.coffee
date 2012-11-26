@@ -75,7 +75,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				else
 					return ''
 
-			@availableOptions = ko.computed () =>
+			@availableOptionsNoThrottle = ko.computed(() =>
 				result = []
 				search = @delayedSearchString().toLowerCase()
 				ko.utils.arrayForEach @options(), (e) =>
@@ -85,12 +85,19 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 						result.push e
 
 				return result
-
-			@availableOptionsVisibleNoThrottle = ko.computed(() =>
-				@enabled() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
 			)
 
-			@availableOptionsVisible = @availableOptionsVisibleNoThrottle.extend throttle: 100
+			# We throttle the available options to ensure that the list updates after we may decide to hide it
+			@availableOptions = @availableOptionsNoThrottle.extend throttle: 250
+
+
+			@availableOptionsVisible = ko.computed(() =>
+				if @enabled() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
+					return @searchString().length > 0 || @highlightedIndex() != -2
+				return false
+			# This is throttled to ensure that clicking the list doesn't cause any weird effects
+			# Like the field looses focus and then the list disappears
+			).extend throttle: 100
 
 			@noResultsVisible = ko.computed () =>
 				!@createNewEnabled() &&
@@ -129,8 +136,9 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			@subscriptions.push @searchFieldFocused.subscribe () =>
 				@isLastSelectedMarked false
 
-			# In order to keep things working as intended and as expected, bind up against the non-throttled version
-			@subscriptions.push @availableOptionsVisibleNoThrottle.subscribe () => @resetSearch() if @automaticClear()
+			@subscriptions.push @searchFieldFocused.subscribe (focused) =>
+				if !focused
+					@resetSearch() if @automaticClear()
 
 			@createNewText = ko.observable(options.createNewText)
 			@createNewVisible = ko.computed () => @createNewEnabled() && @delayedSearchString() != '' && @availableOptions().length == 0 && @singleSelectionAllowed()
@@ -204,7 +212,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			@resetSearch()
 
-		selectHighlighted: () ->
+		selectHighlighted: (forceShowAvailableOptions = false) ->
 			return unless @enabled()
 			return @createNew() if @createNewVisible() && @createNewHighlighted()
 			return @chooseFollowing() if @chooseFollowingVisible() && @chooseFollowingHighlighted()
@@ -212,15 +220,25 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			return unless highlighted?
 
-			@selectOption highlighted
+			@selectOption highlighted, forceShowAvailableOptions
 
-		selectOption: (option) ->
+		selectOption: (option, forceShowAvailableOptions = false) ->
 			return unless @enabled()
 			return unless @singleSelectionAllowed()
+			hlIdx = @highlightedIndex()
+			availLength = @availableOptions().length
 			@options.remove option
 			@selectedOptions.push option
 
-			@resetSearch()
+			if forceShowAvailableOptions
+				if hlIdx >= availLength-1
+					if hlIdx > 0
+						@highlightedIndex(hlIdx-1)
+					else
+						@highlightedIndex(-2)
+				@isLastSelectedMarked(false)
+			else
+				@resetSearch()
 			@searchFieldFocused(true)
 
 		deselectOption: (option) ->

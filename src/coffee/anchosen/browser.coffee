@@ -19,7 +19,12 @@ define [
 		test = document.createElement 'input'
 		return 'placeholder' in test
 
+
+	isMac = () -> navigator.platform.indexOf('Mac') > -1
+
+
 	return {
 		flexbox: hasFlex()
 		placeholder: hasPlaceholder()
+		isMac: isMac()
 	}

@@ -1,4 +1,4 @@
-define ['jquery', 'knockout'], ($, ko) ->
+define ['jquery', 'knockout', 'anchosen/browser'], ($, ko, browser) ->
 	UPARROW = 38
 	DOWNARROW = 40
 	BACKSPACE = 8
@@ -16,7 +16,7 @@ define ['jquery', 'knockout'], ($, ko) ->
 
 			callback = () ->
 				val = $el.val()
-				text val if val != $el.attr('placeholder')
+				text val if val != $el.attr('placeholder') || val == ''
 			$el.bind 'input.anchosen', callback if ko.isObservable text
 
 			# IE doesn't fire input events on text deletions, only additions *sigh* who ever thought that was a great idea?
@@ -43,8 +43,11 @@ define ['jquery', 'knockout'], ($, ko) ->
 			$el.bind 'keyup.anchosen', (e) ->
 				switch e.keyCode
 					when ESCAPE then binding.reset.call(viewModel, true) if typeof binding.reset == 'function'
-					when ENTER then binding.selectHighlighted.call(viewModel) if typeof binding.selectHighlighted == 'function'
-
+					when ENTER
+						keepText = (browser.isMac && e.metaKey) || (!browser.isMac && e.ctrlKey) || e.shiftKey
+						binding.selectHighlighted.call(viewModel, keepText) if typeof binding.selectHighlighted == 'function'
+						if keepText
+							$el.select()
 
 		update: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) ->
 			$el = $ element
