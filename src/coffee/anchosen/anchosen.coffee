@@ -115,6 +115,7 @@ define [
 						<li class="anchosen-available-option" data-bind="text: label, css: { highlighted: $root.isHighlighted($data) }"></li>
 					<!-- /ko -->
 					<li data-bind="visible: noResultsVisible" class="anchosen-no-results">No results found for \'<span data-bind="text: searchString"></span>\'</li>
+					<li data-bind="visible: alreadySelectedVisible, text: alreadySelectedText" class="anchosen-already-selected"></li>
 					<li data-bind="visible: createNewVisible, text: formattedCreateNewText, click: createNew, css: { highlighted: createNewHighlighted }" class="anchosen-create-new"></li>
 				</ol>
 			</div>')

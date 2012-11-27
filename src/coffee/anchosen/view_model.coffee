@@ -17,6 +17,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			maximumSelectionsAllowed: 0 # 0 for no limit
 			maximumSelectionsReachedText: 'Maximum of {0} items reached'
+			alreadySelectedText: 'Option \'{0}\' is already selected'
 			automaticClear: true
 		subscriptions: null
 
@@ -93,11 +94,17 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				return false
 			)
 
+			@alreadySelectedTextTemplate = ko.observable options.alreadySelectedText
+			@alreadySelectedText = ko.computed () => @formatText @alreadySelectedTextTemplate(), @searchString()
+			@alreadySelectedVisible = ko.computed () => @delayedSearchString() != '' && @availableOptions().length == 0 && @selectedOptionsMatchesSearchString()
+
+
 			@noResultsVisible = ko.computed () =>
 				!@createNewEnabled() &&
-				@availableOptions().length == 0 &&
+				@searchString().length > 0 &&
 				@options().length > 0 &&
-				@searchString().length > 0
+				@availableOptions().length == 0 &&
+				!@alreadySelectedVisible()
 
 			@highlighted = ko.computed
 				read: () =>
@@ -146,7 +153,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 
 			@createNewText = ko.observable(options.createNewText)
-			@createNewVisible = ko.computed () => @createNewEnabled() && @delayedSearchString() != '' && @availableOptions().length == 0 && @singleSelectionAllowed()
+			@createNewVisible = ko.computed () => @createNewEnabled() && !@alreadySelectedVisible() && @delayedSearchString() != '' && @availableOptions().length == 0 && @singleSelectionAllowed()
 
 			@createNewHighlighted = ko.computed () => @highlightedIndex() == -1
 
