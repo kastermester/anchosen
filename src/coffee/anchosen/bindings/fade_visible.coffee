@@ -18,4 +18,4 @@ define [
 			if (valueUnwrapped == true)
 				$(element).fadeIn(duration) # Make the element visible
 			else
-				$(element).fadeOut(duration)   # Make the element invisible
+				$(element).hide()   # Make the element invisible

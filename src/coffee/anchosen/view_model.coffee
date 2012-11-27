@@ -26,7 +26,6 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			options = $.extend {}, ViewModel::defaultOptions, options
 			@createNewHandler = options.createNewHandler
 			@searchString = ko.observable ''
-			@oldSearchString = ''
 			@delayedSearchString = ko.computed(
 				() => @searchString()
 			).extend throttle: 1
@@ -75,7 +74,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				else
 					return ''
 
-			@availableOptionsNoThrottle = ko.computed(() =>
+			@availableOptions = ko.computed(() =>
 				result = []
 				search = @delayedSearchString().toLowerCase()
 				ko.utils.arrayForEach @options(), (e) =>
@@ -87,17 +86,12 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				return result
 			)
 
-			# We throttle the available options to ensure that the list updates after we may decide to hide it
-			@availableOptions = @availableOptionsNoThrottle.extend throttle: 250
-
-
+			@availableOptionsHidden = ko.observable(false)
 			@availableOptionsVisible = ko.computed(() =>
-				if @enabled() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
+				if @enabled() && !@availableOptionsHidden() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
 					return @searchString().length > 0 || @highlightedIndex() != -2
 				return false
-			# This is throttled to ensure that clicking the list doesn't cause any weird effects
-			# Like the field looses focus and then the list disappears
-			).extend throttle: 100
+			)
 
 			@noResultsVisible = ko.computed () =>
 				!@createNewEnabled() &&
@@ -133,12 +127,23 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				@highlightedIndex -2
 				@isLastSelectedMarked false
 
-			@subscriptions.push @searchFieldFocused.subscribe () =>
-				@isLastSelectedMarked false
-
 			@subscriptions.push @searchFieldFocused.subscribe (focused) =>
 				if !focused
 					@resetSearch() if @automaticClear()
+				@isLastSelectedMarked false
+
+			@subscriptions.push @availableOptions.subscribe (opts) =>
+				@highlightedIndex(0) if opts.length == 1
+
+			@selectedOptionsMatchesSearchString = ko.computed () =>
+				search = @delayedSearchString()
+				return false if search.length == 0
+				for selected in @selectedOptions()
+					idxOf = selected.label.toLowerCase().indexOf(search)
+					return true if idxOf == 0 && selected.label.length == search.length
+
+				return false
+
 
 			@createNewText = ko.observable(options.createNewText)
 			@createNewVisible = ko.computed () => @createNewEnabled() && @delayedSearchString() != '' && @availableOptions().length == 0 && @singleSelectionAllowed()
@@ -227,6 +232,10 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			return unless @singleSelectionAllowed()
 			hlIdx = @highlightedIndex()
 			availLength = @availableOptions().length
+			unless forceShowAvailableOptions
+				@availableOptionsHidden(true)
+				# Reset it back later
+				setTimeout (() => @availableOptionsHidden(false)), 250
 			@options.remove option
 			@selectedOptions.push option
 
