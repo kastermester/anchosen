@@ -39,12 +39,12 @@ define [
 				e.stopPropagation()
 				e.preventDefault()
 				viewModel.searchFieldFocused(true)
-			@$el.delegate 'ol.anchosen-available-options > li.anchosen-available-option', 'click.anchosen', (e) ->
+			@$el.delegate 'ol.anchosen-available-options li.anchosen-available-option', 'click.anchosen', (e) ->
 				keepText = (browser.isMac && e.metaKey) || (!browser.isMac && e.ctrlKey) || e.shiftKey
 				viewModel.selectOption(ko.dataFor(this), keepText)
 				that.$searchField.select() if keepText
 
-			@$el.delegate 'ol.anchosen-available-options > li.anchosen-choose-following', 'click.anchosen', (e) ->
+			@$el.delegate 'ol.anchosen-available-options li.anchosen-choose-following', 'click.anchosen', (e) ->
 				viewModel.chooseFollowing()
 
 			@$el.delegate 'ol.anchosen-selected-options > li > span.anchosen-deselect-option', 'click.anchosen', (e) ->
@@ -66,10 +66,10 @@ define [
 			@$el.delegate 'ol.anchosen-available-options > li.anchosen-available-option', 'hover.anchosen', (e) ->
 				viewModel.highlighted ko.dataFor this
 
-			@$el.delegate 'ol.anchosen-available-options > li.anchosen-choose-following', 'hover.anchosen', () ->
+			@$el.delegate 'ol.anchosen-available-options li.anchosen-choose-following', 'hover.anchosen', () ->
 				viewModel.highlightedIndex -1
 
-			@$el.delegate 'ol.anchosen-available-options > li.anchosen-create-new', 'hover.anchosen', (e) ->
+			@$el.delegate 'ol.anchosen-available-options li.anchosen-create-new', 'hover.anchosen', (e) ->
 				viewModel.highlightedIndex -2
 
 			@$searchField = $(@$el.find('input.anchosen-search-input')[0])
@@ -113,8 +113,14 @@ define [
 			</div>
 			<div class="anchosen-drop" data-bind="anchosenFadeVisible: availableOptionsVisible">
 				<ol class="anchosen-available-options">
-					<li data-bind="visible: createNewVisible, text: formattedCreateNewText, click: createNew, css: { highlighted: createNewHighlighted }" class="anchosen-create-new"></li>
-					<li class="anchosen-choose-following" data-bind="text: chooseFollowingText, visible: chooseFollowingVisible, css: { highlighted: $root.chooseFollowingHighlighted }"></li>
+					<ol class="anchosen-extra-options" data-bind="visible: extraOptionsVisible">
+						<li data-bind="visible: createNewVisible, click: createNew, css: { highlighted: createNewHighlighted }" class="anchosen-create-new">
+							<strong data-bind="text: formattedCreateNewText"></strong>
+						</li>
+						<li class="anchosen-choose-following" data-bind="visible: chooseFollowingVisible, css: { highlighted: $root.chooseFollowingHighlighted }">
+							<strong data-bind="text: chooseFollowingText"></strong>
+						</li>
+					</ol>
 					<!-- ko foreach: availableOptions -->
 						<li class="anchosen-available-option" data-bind="text: label, css: { highlighted: $root.isHighlighted($data) }"></li>
 					<!-- /ko -->

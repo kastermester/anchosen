@@ -31,9 +31,6 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			options = $.extend {}, ViewModel::defaultOptions, options
 			@createNewHandler = options.createNewHandler
 			@searchString = ko.observable ''
-			@delayedSearchString = ko.computed(
-				() => @searchString()
-			).extend throttle: 1
 
 			@reverseShowOrder = ko.observable(false)
 
@@ -81,7 +78,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			@availableOptions = ko.computed(() =>
 				result = []
-				search = @delayedSearchString().toLowerCase()
+				search = @searchString().toLowerCase()
 				ko.utils.arrayForEach @options(), (e) =>
 					idxOf = e.label.toLowerCase().indexOf(search)
 
@@ -100,7 +97,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			@alreadySelectedTextTemplate = ko.observable options.alreadySelectedText
 			@alreadySelectedText = ko.computed () => @formatText @alreadySelectedTextTemplate(), @searchString()
-			@alreadySelectedVisible = ko.computed () => @delayedSearchString() != '' && @availableOptions().length == 0 && @selectedOptionsMatchesSearchString()
+			@alreadySelectedVisible = ko.computed () => @searchString() != '' && @availableOptions().length == 0 && @selectedOptionsMatchesSearchString()
 
 
 			@noResultsVisible = ko.computed () =>
@@ -133,8 +130,9 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				return false if avail > @chooseFollowingThreshold() && @chooseFollowingThreshold() != 0
 				return false if @maximumSelectionsAllowed() > 0 && (@maximumSelectionsAllowed() - @selectedOptions().length) < @availableOptions().length
 				return true
+
 			@subscriptions = []
-			@subscriptions.push @delayedSearchString.subscribe () =>
+			@subscriptions.push @searchString.subscribe () =>
 				@highlightedIndex NONE_HIGHLIGHT_IDX
 				@isLastSelectedMarked false
 
@@ -147,7 +145,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				@highlightedIndex(0) if opts.length == 1
 
 			@selectedOptionsMatchesSearchString = ko.computed () =>
-				search = @delayedSearchString()
+				search = @searchString()
 				return false if search.length == 0
 				for selected in @selectedOptions()
 					idxOf = selected.label.toLowerCase().indexOf(search)
@@ -158,10 +156,10 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 			@createNewText = ko.observable(options.createNewText)
 			@createNewVisible = ko.computed () =>
-				unless @createNewEnabled() && !@alreadySelectedVisible() && @delayedSearchString() != '' && @singleSelectionAllowed()
+				unless @createNewEnabled() && !@alreadySelectedVisible() && @searchString() != '' && @singleSelectionAllowed()
 					return false
 
-				search = @delayedSearchString()
+				search = @searchString()
 				match = false
 				ko.utils.arrayForEach @availableOptions(), (e) ->
 					match = true if e.label.toLowerCase().indexOf(search) == 0 && e.label.length == search.length
@@ -171,8 +169,9 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			@createNewHighlighted = ko.computed () => @highlightedIndex() == CREATENEW_HIGHLIGHT_IDX
 
 			@formattedCreateNewText = ko.computed () =>
-				@formatText @createNewText(), @delayedSearchString()
+				@formatText @createNewText(), @searchString()
 
+			@extraOptionsVisible = ko.computed () => @chooseFollowingVisible() || @createNewVisible()
 
 		formatText: (text, value) ->
 			text.replace '{0}', value
@@ -319,7 +318,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 		createNew: () ->
 			return unless @enabled()
 			return unless @singleSelectionAllowed()
-			text = @delayedSearchString()
+			text = @searchString()
 
 			automaticClear = @automaticClear()
 			@automaticClear(false)

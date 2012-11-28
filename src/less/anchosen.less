@@ -138,7 +138,7 @@ ol.anchosen-available-options {
 	margin: -1px 0 0;
 	padding: 0;
 	.flex();
-	&> li {
+	& li {
 		line-height: 15px;
 		padding: 5px 6px;
 		margin: 0;
@@ -162,5 +162,19 @@ ol.anchosen-available-options {
 
 	&.reverse {
 		.flex-reverse();
+
+		.anchosen-extra-options {
+			.flex-reverse();
+			border-top: 1px solid #ddd;
+			border-bottom-width: 0;		
+		}
 	}
+}
+
+
+.anchosen-extra-options {
+	margin: 0px;
+	padding: 0px;
+	.flex();
+	border-bottom: 1px solid #ddd;
 }
