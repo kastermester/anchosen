@@ -1,11 +1,11 @@
 fs = require 'fs'
 path = require 'path'
-requirejs = require 'requirejs'
 nodejs_exec = require('child_process').exec
 
 cwd = __dirname + '/'
 
 rjs = (cont) ->
+	requirejs = require 'requirejs'
 	config =
 		appDir: 'bin'
 		dir: 'build'
