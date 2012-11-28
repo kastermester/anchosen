@@ -73,7 +73,7 @@ deps = (cont) ->
 		underscoreDest = fs.createWriteStream cwd + 'bin/js/underscore.js'
 		underscoreSource.pipe underscoreDest
 		underscoreDest.on 'close', () ->
-			exec 'grunt', {
+			exec 'node_modules/grunt/bin/grunt', {
 				cwd: cwd + 'vendor/jquery'
 			}, () ->
 				fs.renameSync cwd + 'vendor/jquery/dist/jquery.js', 'bin/js/jquery.js'
@@ -98,18 +98,18 @@ clean = (cont) ->
 		fs.mkdirSync 'bin/js'
 		fs.mkdirSync 'bin/css'
 
-		deleteDir 'build', () -> deleteDir 'build_min'
+		deleteDir 'build', () -> deleteDir 'build_min', () -> cont()
 
 
 build = (cont) ->
 	compile_coffee () -> compile_less()
 
 compile_less = (cont) ->
-	exec 'lessc src/less/anchosen.less bin/css/anchosen.css', {}, (stdout) ->
+	exec 'node_modules/less/bin/lessc src/less/anchosen.less bin/css/anchosen.css', {}, (stdout) ->
 		cont?()
 
 compile_coffee = (cont) ->
-	exec 'coffee --bare -co bin/js src/coffee', {}, (stdout) ->
+	exec 'node_modules/coffee-script/bin/coffee --bare -co bin/js src/coffee', {}, (stdout) ->
 		cont?()
 
 task 'all', 'compiles all of them!', () ->
