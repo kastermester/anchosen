@@ -157,7 +157,16 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 
 			@createNewText = ko.observable(options.createNewText)
-			@createNewVisible = ko.computed () => @createNewEnabled() && !@alreadySelectedVisible() && @delayedSearchString() != '' && @singleSelectionAllowed()
+			@createNewVisible = ko.computed () =>
+				unless @createNewEnabled() && !@alreadySelectedVisible() && @delayedSearchString() != '' && @singleSelectionAllowed()
+					return false
+
+				search = @delayedSearchString()
+				match = false
+				ko.utils.arrayForEach @availableOptions(), (e) ->
+					match = true if e.label.toLowerCase().indexOf(search) == 0 && e.label.length == search.length
+
+				return !match
 
 			@createNewHighlighted = ko.computed () => @highlightedIndex() == CREATENEW_HIGHLIGHT_IDX
 
