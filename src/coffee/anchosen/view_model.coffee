@@ -23,6 +23,10 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 		disposed: false
 
+		NONE_HIGHLIGHT_IDX = -3
+		CREATENEW_HIGHLIGHT_IDX = -2
+		CHOOSEFOLLOWING_HIGHLIGHT_IDX = -1
+
 		constructor: (options) ->
 			options = $.extend {}, ViewModel::defaultOptions, options
 			@createNewHandler = options.createNewHandler
@@ -52,11 +56,11 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			@chooseFollowingThreshold = ko.observable(options.chooseFollowingThreshold)
 			@chooseFollowingText = ko.observable(options.chooseFollowingText)
 
-			@highlightedIndex = ko.observable(-2)
+			@highlightedIndex = ko.observable(NONE_HIGHLIGHT_IDX)
 
 			@createNewEnabled = ko.observable(options.createNewEnabled)
 
-			@chooseFollowingHighlighted = ko.computed () => @highlightedIndex() == -1
+			@chooseFollowingHighlighted = ko.computed () => @highlightedIndex() == CHOOSEFOLLOWING_HIGHLIGHT_IDX
 
 			@options = if !ko.isObservable(options.options) then ko.observableArray opts else options.options
 			@selectedOptions = if !ko.isObservable(options.selected) then ko.observableArray selected else options.selected
@@ -90,7 +94,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			@availableOptionsHidden = ko.observable(false)
 			@availableOptionsVisible = ko.computed(() =>
 				if @enabled() && !@availableOptionsHidden() && @searchFieldFocused() && @singleSelectionAllowed() && @options().length > 0
-					return @searchString().length > 0 || @highlightedIndex() != -2
+					return @searchString().length > 0 || @highlightedIndex() != NONE_HIGHLIGHT_IDX
 				return false
 			)
 
@@ -131,7 +135,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				return true
 			@subscriptions = []
 			@subscriptions.push @delayedSearchString.subscribe () =>
-				@highlightedIndex -2
+				@highlightedIndex NONE_HIGHLIGHT_IDX
 				@isLastSelectedMarked false
 
 			@subscriptions.push @searchFieldFocused.subscribe (focused) =>
@@ -153,9 +157,9 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 
 			@createNewText = ko.observable(options.createNewText)
-			@createNewVisible = ko.computed () => @createNewEnabled() && !@alreadySelectedVisible() && @delayedSearchString() != '' && @availableOptions().length == 0 && @singleSelectionAllowed()
+			@createNewVisible = ko.computed () => @createNewEnabled() && !@alreadySelectedVisible() && @delayedSearchString() != '' && @singleSelectionAllowed()
 
-			@createNewHighlighted = ko.computed () => @highlightedIndex() == -1
+			@createNewHighlighted = ko.computed () => @highlightedIndex() == CREATENEW_HIGHLIGHT_IDX
 
 			@formattedCreateNewText = ko.computed () =>
 				@formatText @createNewText(), @delayedSearchString()
@@ -180,15 +184,15 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			return unless @enabled()
 			highlighted = @highlightedIndex()
 
-			if @createNewVisible()
-				if !@createNewHighlighted()
-					@highlightedIndex(-1)
-					@onHighlightNextOrPrevious?()
-				return
-
 			if highlighted+1 < @availableOptions().length
-				if highlighted == -2 && !@chooseFollowingVisible()
-					highlighted = -1
+				if highlighted == NONE_HIGHLIGHT_IDX
+					if !@createNewVisible()
+						highlighted += 1
+						if !@chooseFollowingVisible()
+							highlighted += 1
+				
+				if highlighted == CREATENEW_HIGHLIGHT_IDX && !@chooseFollowingVisible()
+					highlighted += 1
 				@highlightedIndex(highlighted+1)
 				@onHighlightNextOrPrevious?()
 
@@ -197,12 +201,20 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 			return unless @enabled()
 			highlighted = @highlightedIndex()
 
-			if @createNewVisible()
-				if @createNewHighlighted()
-					@highlightedIndex(-2)
-				return
+			if @createNewVisible() && @createNewHighlighted()
+				@highlightedIndex(NONE_HIGHLIGHT_IDX)
+				return @onHighlightNextOrPrevious?()
 
-			if highlighted > -2
+			if @chooseFollowingVisible()
+				if @chooseFollowingHighlighted()
+					if @createNewVisible()
+						@highlightedIndex(CREATENEW_HIGHLIGHT_IDX)
+					else 
+						@highlightedIndex(NONE_HIGHLIGHT_IDX)
+
+					return @onHighlightNextOrPrevious?()
+
+			if highlighted > NONE_HIGHLIGHT_IDX
 				if highlighted == 0 && !@chooseFollowingVisible()
 					highlighted = -1
 				@highlightedIndex(highlighted-1)
@@ -251,7 +263,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 					if hlIdx > 0
 						@highlightedIndex(hlIdx-1)
 					else
-						@highlightedIndex(-2)
+						@highlightedIndex(-3)
 				@isLastSelectedMarked(false)
 			else
 				@resetSearch()
@@ -290,7 +302,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 
 		resetSearch: (deselect = false) ->
 			@searchString('')
-			@highlightedIndex(-2)
+			@highlightedIndex(-3)
 			@isLastSelectedMarked(false)
 
 			@searchFieldFocused(false) if deselect
