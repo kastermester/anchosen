@@ -62,6 +62,7 @@ exec = (command, args, env, cont) ->
 	proc = spawn(command, args, env)
 
 	proc.on 'exit', (code) ->
+		console.log command if code != 0
 		cont?() if code == 0
 
 deps = (cont) ->
@@ -74,7 +75,7 @@ deps = (cont) ->
 		underscoreDest = fs.createWriteStream cwd + 'bin/js/underscore.js'
 		underscoreSource.pipe underscoreDest
 		underscoreDest.on 'close', () ->
-			exec 'node_modules/grunt/bin/grunt', [], {
+			exec 'node', ['node_modules/grunt/bin/grunt'], {
 				cwd: cwd + 'vendor/jquery'
 			}, () ->
 				fs.renameSync cwd + 'vendor/jquery/dist/jquery.js', 'bin/js/jquery.js'
@@ -108,12 +109,12 @@ build = (cont) ->
 
 compile_less = (cont) ->
 	console.log 'Compiling .less files...'
-	exec 'node_modules/less/bin/lessc', ['src/less/anchosen.less', 'bin/css/anchosen.css'], {}, (stdout) ->
+	exec 'node', ['node_modules/less/bin/lessc', 'src/less/anchosen.less', 'bin/css/anchosen.css'], {}, (stdout) ->
 		cont?()
 
 compile_coffee = (cont) ->
 	console.log 'Compiling .coffee files...'
-	exec 'node_modules/coffee-script/bin/coffee', ['--bare', '-co', 'bin/js', 'src/coffee'], {}, (stdout) ->
+	exec 'node', ['node_modules/coffee-script/bin/coffee', '--bare', '-co', 'bin/js', 'src/coffee'], {}, (stdout) ->
 		cont?()
 
 setup = (cont) ->
@@ -122,6 +123,11 @@ setup = (cont) ->
 
 npm = (cont) ->
 	console.log 'Running npm install...'
+	if process.platform is 'win32'
+		console.log 'Cannot run npm install from Cakefile under windows'
+		console.log 'Please manually run "npm install" in Anchosen working directory - and vendor/jquery directory'
+		console.log 'If you have done this previously, ignore this message'
+		return cont?()
 	exec 'npm', ['install'], {}, (stdout) ->
 		exec 'npm', ['install'], { cwd: 'vendor/jquery' }, (stdout) ->
 			cont?()
@@ -154,4 +160,4 @@ task 'setup', 'Sets up git submodules and runs npm install', () ->
 task 'serve', 'Fire up a webserver for use with the example files', (options) ->
 	port = if options.port? then parseInt options.port else 8080
 	console.log "Server started on port #{port} - see http://localhost:#{port}/examples/example.html for an example run"
-	exec "node_modules/coffee-script/bin/coffee", ['examples/server.coffee', "--port #{port}"], {}
+	exec "node", ["node_modules/coffee-script/bin/coffee", 'examples/server.coffee', "--port #{port}"], {}
