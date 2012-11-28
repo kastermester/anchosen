@@ -98,7 +98,7 @@ clean = (cont) ->
 		fs.mkdirSync 'bin/js'
 		fs.mkdirSync 'bin/css'
 
-		deleteDir 'build', () -> deleteDir 'build_min', () -> cont()
+		deleteDir 'build', () -> deleteDir 'build_min', () -> cont?()
 
 
 build = (cont) ->
@@ -112,9 +112,22 @@ compile_coffee = (cont) ->
 	exec 'node_modules/coffee-script/bin/coffee --bare -co bin/js src/coffee', {}, (stdout) ->
 		cont?()
 
+setup = (cont) ->
+	exec 'git submodule update --init --recursive', {}, () -> cont?()
+
+npm = (cont) ->
+	exec 'npm install', {}, (stdout) ->
+		exec 'npm install', { cwd: 'vendor/jquery' }, (stdout) ->
+			cont?()
+
+option '-p', '--port [PORT]', 'Sets the port number to use in the example server, defaults to 8080'
+
+
 task 'all', 'compiles all of them!', () ->
 	clean () ->
-		deps () -> build()
+		setup () ->
+			npm () ->
+				deps () -> build()
 
 task 'deps', 'compiles vendor libraries', () ->
 	deps()
@@ -127,3 +140,12 @@ task 'clean', 'cleans the bin directory', () ->
 
 task 'rjs', 'RequireJSs the library', () ->
 	rjs()
+
+task 'setup', 'Sets up git submodules and runs npm install', () ->
+	setup () -> npm()
+
+
+task 'serve', 'Fire up a webserver for use with the example files', (options) ->
+	port = if options.port? then parseInt options.port else 8080
+	console.log "Server started on port #{port} - see http://localhost:#{port}/examples/example.html for an example run"
+	exec "node_modules/coffee-script/bin/coffee examples/server.coffee --port #{port}", {}
