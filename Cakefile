@@ -1,6 +1,6 @@
 fs = require 'fs'
 path = require 'path'
-nodejs_exec = require('child_process').exec
+spawn = require('child_process').spawn
 
 cwd = __dirname + '/'
 
@@ -57,14 +57,15 @@ rjs = (cont) ->
 		requirejs.optimize config, (buildResponse) ->
 			cont?()
 
-exec = (command, env, cont) ->
-	nodejs_exec command, env, (error, stdout, stderr) ->
-		console.log "Error running command: #{command}" if error?
-		console.log error if error?
-		return console.log stderr if error?
-		cont(stdout) if cont?
+exec = (command, args, env, cont) ->
+	env.stdio = 'inherit'
+	proc = spawn(command, args, env)
+
+	proc.on 'exit', (code) ->
+		cont?() if code == 0
 
 deps = (cont) ->
+	console.log 'Compiling dependencies...'
 	knockoutSource = fs.createReadStream cwd + 'vendor/knockout/build/output/knockout-latest.debug.js'
 	knockoutDest = fs.createWriteStream cwd + 'bin/js/knockout.js'
 	knockoutSource.pipe knockoutDest
@@ -73,7 +74,7 @@ deps = (cont) ->
 		underscoreDest = fs.createWriteStream cwd + 'bin/js/underscore.js'
 		underscoreSource.pipe underscoreDest
 		underscoreDest.on 'close', () ->
-			exec 'node_modules/grunt/bin/grunt', {
+			exec 'node_modules/grunt/bin/grunt', [], {
 				cwd: cwd + 'vendor/jquery'
 			}, () ->
 				fs.renameSync cwd + 'vendor/jquery/dist/jquery.js', 'bin/js/jquery.js'
@@ -86,13 +87,13 @@ deps = (cont) ->
 
 deleteDir = (dir, cont) ->
 	if fs.existsSync dir
-		exec 'rm -R ' + dir, {}, (stdout) ->
+		exec 'rm', ['-R', dir], {}, (stdout) ->
 			cont?()
 	else
 		cont?()
 
 clean = (cont) ->
-
+	console.log 'Cleaning bin/ dir'
 	deleteDir 'bin', () ->
 		fs.mkdirSync 'bin'
 		fs.mkdirSync 'bin/js'
@@ -102,22 +103,27 @@ clean = (cont) ->
 
 
 build = (cont) ->
+	console.log 'Building Anchosen...'
 	compile_coffee () -> compile_less()
 
 compile_less = (cont) ->
-	exec 'node_modules/less/bin/lessc src/less/anchosen.less bin/css/anchosen.css', {}, (stdout) ->
+	console.log 'Compiling .less files...'
+	exec 'node_modules/less/bin/lessc', ['src/less/anchosen.less', 'bin/css/anchosen.css'], {}, (stdout) ->
 		cont?()
 
 compile_coffee = (cont) ->
-	exec 'node_modules/coffee-script/bin/coffee --bare -co bin/js src/coffee', {}, (stdout) ->
+	console.log 'Compiling .coffee files...'
+	exec 'node_modules/coffee-script/bin/coffee', ['--bare', '-co', 'bin/js', 'src/coffee'], {}, (stdout) ->
 		cont?()
 
 setup = (cont) ->
-	exec 'git submodule update --init --recursive', {}, () -> cont?()
+	console.log 'Initting git submodules...'
+	exec 'git', ['submodule', 'update', '--init', '--recursive'], {}, () -> cont?()
 
 npm = (cont) ->
-	exec 'npm install', {}, (stdout) ->
-		exec 'npm install', { cwd: 'vendor/jquery' }, (stdout) ->
+	console.log 'Running npm install...'
+	exec 'npm', ['install'], {}, (stdout) ->
+		exec 'npm', ['install'], { cwd: 'vendor/jquery' }, (stdout) ->
 			cont?()
 
 option '-p', '--port [PORT]', 'Sets the port number to use in the example server, defaults to 8080'
@@ -148,4 +154,4 @@ task 'setup', 'Sets up git submodules and runs npm install', () ->
 task 'serve', 'Fire up a webserver for use with the example files', (options) ->
 	port = if options.port? then parseInt options.port else 8080
 	console.log "Server started on port #{port} - see http://localhost:#{port}/examples/example.html for an example run"
-	exec "node_modules/coffee-script/bin/coffee examples/server.coffee --port #{port}", {}
+	exec "node_modules/coffee-script/bin/coffee", ['examples/server.coffee', "--port #{port}"], {}
