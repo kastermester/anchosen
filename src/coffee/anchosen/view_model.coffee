@@ -1,5 +1,6 @@
 define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
-	class ViewModel
+	window.Anchosen ?= {}
+	window.Anchosen.ViewModel = class ViewModel
 		defaultOptions:
 			selected: []
 			options: []
@@ -198,7 +199,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 						highlighted += 1
 						if !@chooseFollowingVisible()
 							highlighted += 1
-				
+
 				if highlighted == CREATENEW_HIGHLIGHT_IDX && !@chooseFollowingVisible()
 					highlighted += 1
 				@highlightedIndex(highlighted+1)
@@ -217,7 +218,7 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				if @chooseFollowingHighlighted()
 					if @createNewVisible()
 						@highlightedIndex(CREATENEW_HIGHLIGHT_IDX)
-					else 
+					else
 						@highlightedIndex(NONE_HIGHLIGHT_IDX)
 
 					return @onHighlightNextOrPrevious?()
@@ -364,3 +365,4 @@ define ['jquery', 'underscore', 'knockout'], ($, _, ko) ->
 				@selectedOptions []
 				@options []
 				@disposed = true
+	return window.Anchosen.ViewModel

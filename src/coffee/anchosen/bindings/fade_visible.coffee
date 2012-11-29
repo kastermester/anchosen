@@ -19,3 +19,5 @@ define [
 				$(element).fadeIn(duration) # Make the element visible
 			else
 				$(element).hide()   # Make the element invisible
+
+	return null

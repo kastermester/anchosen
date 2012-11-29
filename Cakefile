@@ -4,7 +4,39 @@ spawn = require('child_process').spawn
 
 cwd = __dirname + '/'
 
+options =
+	includeLoader: true
+
 rjs = (cont) ->
+	wrapStart = """(function(window) {
+var anchosen = {};
+if(typeof window.define === 'function' && window.amd){
+	anchosen.define = window.define;
+} else {
+	anchosen.define = function(name, deps, factory){
+		var params = [];
+		for(var i in deps){
+			var dep = deps[i];
+			switch(dep){
+				case 'jquery': dep = window.jQuery; break;
+				case 'underscore': dep = window._; break;
+				case 'knockout': dep = window.ko; break;
+				case 'anchosen/view_model': dep = window.Anchosen.ViewModel; break;
+				case 'anchosen/browser': dep = window.Anchosen.Browser; break;
+				case 'anchosen':
+				case 'anchosen/anchosen': dep = window.Anchosen; break;
+				default: dep = null;
+			}
+			params.push(dep)
+		}
+		factory.apply(window, params);
+	};
+}"""
+	wrapEnd = """
+}(window));"""
+	wrap = unless options.includeLoader then true else
+		start: wrapStart
+		end: wrapEnd
 	requirejs = require 'requirejs'
 	config =
 		appDir: 'bin'
@@ -21,6 +53,8 @@ rjs = (cont) ->
 				exclude: ['knockout', 'jquery', 'underscore']
 			}
 		]
+		namespace: 'anchosen' if options.includeLoader
+		wrap: wrap
 		paths:
 			jquery: "jquery"
 			knockout: "knockout"
@@ -47,6 +81,8 @@ rjs = (cont) ->
 					exclude: ['knockout', 'jquery', 'underscore']
 				}
 			]
+			wrap: wrap
+			namespace: 'anchosen' if options.includeLoader
 			paths:
 				jquery: "jquery"
 				knockout: "knockout"
@@ -105,7 +141,8 @@ clean = (cont) ->
 
 build = (cont) ->
 	console.log 'Building Anchosen...'
-	compile_coffee () -> compile_less()
+	compile_coffee () -> compile_less () ->
+		cont?()
 
 compile_less = (cont) ->
 	console.log 'Compiling .less files...'
@@ -135,11 +172,13 @@ npm = (cont) ->
 option '-p', '--port [PORT]', 'Sets the port number to use in the example server, defaults to 8080'
 
 
-task 'all', 'compiles all of them!', () ->
+task 'all', 'compiles all of them!', (opts) ->
+	if opts['no-loader']?
+		options.includeLoader = false
 	clean () ->
 		setup () ->
 			npm () ->
-				deps () -> build()
+				deps () -> build () -> rjs()
 
 task 'deps', 'compiles vendor libraries', () ->
 	deps()
@@ -150,8 +189,12 @@ task 'build', 'compiles the project itself', () ->
 task 'clean', 'cleans the bin directory', () ->
 	clean()
 
-task 'rjs', 'RequireJSs the library', () ->
-	rjs()
+option '-n', '--no-loader', 'Flags the build for usage in an rjs environment or not'
+
+task 'rjs', 'RequireJSs the library', (opts) ->
+	if opts['no-loader']?
+		options.includeLoader = false
+	build () -> rjs()
 
 task 'setup', 'Sets up git submodules and runs npm install', () ->
 	setup () -> npm()

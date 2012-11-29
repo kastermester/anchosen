@@ -33,3 +33,4 @@ define [
 			return realResult
 		else
 			return result
+	return null

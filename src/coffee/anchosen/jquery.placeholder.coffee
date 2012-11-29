@@ -29,3 +29,4 @@ define [
 			)
 	)()
 	$.fn.anchosenPlaceholder = () -> @each () -> applyPlaceholder($(this))
+	return null

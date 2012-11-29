@@ -23,7 +23,8 @@ define [
 	isMac = () -> navigator.platform.indexOf('Mac') > -1
 
 
-	return {
+	window.Anchosen ?= {}
+	return window.Anchosen.Browser = {
 		flexbox: hasFlex()
 		placeholder: hasPlaceholder()
 		isMac: isMac()

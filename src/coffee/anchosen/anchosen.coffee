@@ -7,7 +7,7 @@ define [
 	'anchosen/bindings/fade_visible'
 	'anchosen/jquery.placeholder'
 ], ($, ko, VM, browser) ->
-	class Anchosen
+	window.Anchosen = $.extend(class Anchosen
 		disposed: false
 		$el: null
 		viewModel: null
@@ -251,3 +251,4 @@ define [
 				@disposed = true
 				@restoreTabIndex = null
 				@tabIndex = null
+	, window.Anchosen ? {})

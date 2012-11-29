@@ -55,3 +55,5 @@ define ['jquery', 'knockout', 'anchosen/browser'], ($, ko, browser) ->
 			text = ko.utils.unwrapObservable(valueAccessor()).text
 
 			$el.val ko.utils.unwrapObservable(text)
+
+	return null
